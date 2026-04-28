@@ -54,7 +54,27 @@ namespace SerialCommunication
 
         private void buttonConnect_Click(object sender, EventArgs e)
         {
-            // abc def ghi jkl
+            try
+            {
+                if (!serialPortArduino.IsOpen)
+                {
+                    serialPortArduino.Open();
+                    radioButtonVerbonden.Checked = true;
+                    buttonConnect.Text = "Disconnect";
+                    labelStatus.Text = "Verbonden met Arduino";
+                }
+                else
+                {
+                    serialPortArduino.Close();
+                    radioButtonVerbonden.Checked = false;
+                    buttonConnect.Text = "Connect";
+                    labelStatus.Text = "Niet verbonden";
+                }
+            }
+            catch(Exception exception)
+            {
+                labelStatus.Text = "Error" + exception.Message;
+            }
         }
     }
 }
